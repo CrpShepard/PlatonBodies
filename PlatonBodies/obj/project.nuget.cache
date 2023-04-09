@@ -1,8 +1,8 @@
 {
   "version": 2,
-  "dgSpecHash": "7qGCw+bIECbLdoEhvv2lvPuzHpE40xvnQZdTWS/h3lSeyMHImhdWnWYm2H0Fzusksl54uAK4MLsdwTqkxZ2pSg==",
+  "dgSpecHash": "UYactzHTAioaSO+k8XiNmiZIECmBKpRMR2Y6lQfSGwJ68TOl+izTsWcrC5eX8zXPN7GzVxz8CaPBF1BJDe2BXg==",
   "success": true,
-  "projectFilePath": "E:\\Documents\\Учеба\\3д программирование\\PlatonBodies\\PlatonBodies\\PlatonBodies.csproj",
+  "projectFilePath": "F:\\Studies\\curs_4\\3д программирование\\PlatonBodies\\PlatonBodies\\PlatonBodies.csproj",
   "expectedPackageFiles": [
     "C:\\Users\\Valer\\.nuget\\packages\\opentk\\4.7.7\\opentk.4.7.7.nupkg.sha512",
     "C:\\Users\\Valer\\.nuget\\packages\\opentk.compute\\4.7.7\\opentk.compute.4.7.7.nupkg.sha512",
