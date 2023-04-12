@@ -25,6 +25,8 @@ namespace LearnOpenTK
 
         private int _vertexBufferObject4; // dodecahedron
 
+        private int _vertexBufferObject5; // icosahedron
+
         private int _vaoModel;
 
         private int _vaoModel2;
@@ -33,9 +35,9 @@ namespace LearnOpenTK
 
         private int _vaoModel4;
 
-        private int _vaoLamp;
+        private int _vaoModel5;
 
-        private int _elementBufferObject; // dodecahedron_indices
+        private int _vaoLamp;
 
         private Shader _lampShader;
 
@@ -64,6 +66,10 @@ namespace LearnOpenTK
         {
             base.OnLoad();
 
+            //pb.findNormal();
+
+            //pb.findIcosahedron();
+
             GL.ClearColor(0.2f, 0.3f, 0.3f, 1.0f);
 
             GL.Enable(EnableCap.DepthTest);
@@ -82,11 +88,11 @@ namespace LearnOpenTK
 
             _vertexBufferObject4 = GL.GenBuffer();
             GL.BindBuffer(BufferTarget.ArrayBuffer, _vertexBufferObject4);
-            GL.BufferData(BufferTarget.ArrayBuffer, pb.dodecahedron_vertices.Length * sizeof(float), pb.dodecahedron_vertices, BufferUsageHint.StaticDraw);
+            GL.BufferData(BufferTarget.ArrayBuffer, pb.dodecahedron_vertices_normals.Length * sizeof(float), pb.dodecahedron_vertices_normals, BufferUsageHint.StaticDraw);
 
-            _elementBufferObject = GL.GenBuffer();
-            GL.BindBuffer(BufferTarget.ElementArrayBuffer, _elementBufferObject);
-            GL.BufferData(BufferTarget.ElementArrayBuffer, pb.dodecahedron_indices.Length * sizeof(uint), pb.dodecahedron_indices, BufferUsageHint.StaticDraw);
+            _vertexBufferObject5 = GL.GenBuffer();
+            GL.BindBuffer(BufferTarget.ArrayBuffer, _vertexBufferObject5);
+            GL.BufferData(BufferTarget.ArrayBuffer, pb.icosahedron_vertices_normals.Length * sizeof(float), pb.icosahedron_vertices_normals, BufferUsageHint.StaticDraw);
 
             _lightingShader = new Shader("../../../Shader/shader.vert", "../../../Shader/lighting.frag");
             _lampShader = new Shader("../../../Shader/shader.vert", "../../../Shader/shader.frag");
@@ -139,7 +145,37 @@ namespace LearnOpenTK
                 GL.VertexAttribPointer(normalLocation, 3, VertexAttribPointerType.Float, false, 6 * sizeof(float), 3 * sizeof(float));
             }
 
-            
+            {
+                GL.BindBuffer(BufferTarget.ArrayBuffer, _vertexBufferObject4);
+                _vaoModel4 = GL.GenVertexArray();
+                GL.BindVertexArray(_vaoModel4);
+
+                var positionLocation = _lightingShader.GetAttribLocation("aPos");
+                GL.EnableVertexAttribArray(positionLocation);
+
+                GL.VertexAttribPointer(positionLocation, 3, VertexAttribPointerType.Float, false, 6 * sizeof(float), 0);
+
+                var normalLocation = _lightingShader.GetAttribLocation("aNormal");
+                GL.EnableVertexAttribArray(normalLocation);
+                GL.VertexAttribPointer(normalLocation, 3, VertexAttribPointerType.Float, false, 6 * sizeof(float), 3 * sizeof(float));
+
+            }
+
+            {
+                GL.BindBuffer(BufferTarget.ArrayBuffer, _vertexBufferObject5);
+                _vaoModel5 = GL.GenVertexArray();
+                GL.BindVertexArray(_vaoModel5);
+
+                var positionLocation = _lightingShader.GetAttribLocation("aPos");
+                GL.EnableVertexAttribArray(positionLocation);
+
+                GL.VertexAttribPointer(positionLocation, 3, VertexAttribPointerType.Float, false, 6 * sizeof(float), 0);
+
+                var normalLocation = _lightingShader.GetAttribLocation("aNormal");
+                GL.EnableVertexAttribArray(normalLocation);
+                GL.VertexAttribPointer(normalLocation, 3, VertexAttribPointerType.Float, false, 6 * sizeof(float), 3 * sizeof(float));
+
+            }
 
             {
                 GL.BindBuffer(BufferTarget.ArrayBuffer, _vertexBufferObject3);
@@ -151,22 +187,7 @@ namespace LearnOpenTK
                 GL.VertexAttribPointer(positionLocation, 3, VertexAttribPointerType.Float, false, 6 * sizeof(float), 0);
             }
 
-            {
-                GL.BindBuffer(BufferTarget.ArrayBuffer, _vertexBufferObject4);
-                GL.BindBuffer(BufferTarget.ElementArrayBuffer, _elementBufferObject);
-                _vaoModel4 = GL.GenVertexArray();
-                GL.BindVertexArray(_vaoModel4);
-
-                var positionLocation = _lightingShader.GetAttribLocation("aPos");
-                GL.EnableVertexAttribArray(positionLocation);
-
-                GL.VertexAttribPointer(positionLocation, 3, VertexAttribPointerType.Float, false, 3 * sizeof(float), 0);
-
-
-                //var normalLocation = _lightingShader.GetAttribLocation("aNormal");
-                //GL.EnableVertexAttribArray(normalLocation);
-                //GL.VertexAttribPointer(normalLocation, 3, VertexAttribPointerType.Float, false, 6 * sizeof(float), 3 * sizeof(float));
-            }
+            
 
             _camera = new Camera(Vector3.UnitZ * 3, Size.X / (float)Size.Y);
 
@@ -244,11 +265,10 @@ namespace LearnOpenTK
             GL.DrawArrays(PrimitiveType.Triangles, 0, 36);
 
             GL.BindVertexArray(_vaoModel4); // dodecahedron
-            GL.BindBuffer(BufferTarget.ElementArrayBuffer, _elementBufferObject);
 
             _lightingShader.Use();
 
-            _lightingShader.SetMatrix4("model", Matrix4.Identity * Matrix4.CreateTranslation(0, -2.0f, 0));
+            _lightingShader.SetMatrix4("model", Matrix4.Identity * Matrix4.CreateTranslation(-3.0f, -2.0f, 2.0f));
             _lightingShader.SetMatrix4("view", _camera.GetViewMatrix());
             _lightingShader.SetMatrix4("projection", _camera.GetProjectionMatrix());
 
@@ -257,9 +277,22 @@ namespace LearnOpenTK
             _lightingShader.SetVector3("lightPos", _lightPos);
             _lightingShader.SetVector3("viewPos", _camera.Position);
 
-            GL.DrawElements(PrimitiveType.Triangles, pb.dodecahedron_indices.Length, DrawElementsType.UnsignedInt, 0);
-            //GL.DrawElements(PrimitiveType.Triangles, 108, DrawElementsType.UnsignedInt, 0);
-            //GL.DrawArrays(PrimitiveType.Triangles, 0, 108);
+            GL.DrawArrays(PrimitiveType.Triangles, 0, 108);
+
+            GL.BindVertexArray(_vaoModel5); // dodecahedron
+
+            _lightingShader.Use();
+
+            _lightingShader.SetMatrix4("model", Matrix4.Identity * Matrix4.CreateTranslation(3.0f, -2.0f, 2.0f));
+            _lightingShader.SetMatrix4("view", _camera.GetViewMatrix());
+            _lightingShader.SetMatrix4("projection", _camera.GetProjectionMatrix());
+
+            _lightingShader.SetVector3("objectColor", new Vector3(0.4f, 0.6f, 0.31f));
+            _lightingShader.SetVector3("lightColor", new Vector3(1.0f, 1.0f, 1.0f));
+            _lightingShader.SetVector3("lightPos", _lightPos);
+            _lightingShader.SetVector3("viewPos", _camera.Position);
+
+            GL.DrawArrays(PrimitiveType.Triangles, 0, 60);
 
             GL.BindVertexArray(_vaoLamp);
 
