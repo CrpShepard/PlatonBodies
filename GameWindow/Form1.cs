@@ -86,7 +86,7 @@ namespace GameWindowApp
 
         private void glControl1_Load(object sender, EventArgs e)
         {
-            
+
             // Make sure that when the GLControl is resized or needs to be painted,
             // we update our projection matrix or re-render its contents, respectively.
             glControl1.Resize += glControl1_Resize;
@@ -217,10 +217,10 @@ namespace GameWindowApp
             _timer = new Timer();
             _timer.Tick += (sender, e) =>
             {
-                _angle += 0.5f;
+                //_angle += 0.5f;
                 Render();
             };
-            _timer.Interval = 17;   // 1000 ms per sec / 50 ms per frame = 20 FPS
+            _timer.Interval = 15;   // 1000 ms per sec / 50 ms per frame = 20 FPS
             _timer.Start();
 
             // Ensure that the viewport and projection matrix are set correctly initially.
@@ -251,25 +251,21 @@ namespace GameWindowApp
         {
             glControl1.MakeCurrent();
 
-            
+            float deltaTime = (float)_stopwatch.ElapsedMilliseconds / 1000.0f;
 
-            _timer2 = new Timer();
-            _timer2.Tick += (sender, e) =>
-            {
-                if (forward)
-                    _time += 8.5;
-                if (!forward)
-                    _time -= 8.5;
-            };
-            _timer2.Interval = 17;   // 1000 ms per sec / 50 ms per frame = 20 FPS
-            _timer2.Start();
+            if (forward)
+                _time += 8.5 * deltaTime;
+            if (!forward)
+                _time -= 8.5 * deltaTime;
+
 
             GL.Clear(ClearBufferMask.ColorBufferBit | ClearBufferMask.DepthBufferBit);
 
             GL.BindVertexArray(_vaoModel); // piramide
 
             _lightingShader.Use();
-            var model = Matrix4.Identity * Matrix4.CreateTranslation((float)_time, 2.0f, 0);
+            float angle = (float)(Math.PI / 2.0f);
+            var model = Matrix4.Identity * Matrix4.CreateRotationY((float)_time) * Matrix4.CreateTranslation((float)_time, 2.0f, 0);
 
             if (model.ExtractTranslation().X > 2.0f)
             {
@@ -320,6 +316,7 @@ namespace GameWindowApp
             //_lightingShader.SetVector3("objectColor", new Vector3(0.4f, 0.6f, 0.31f));
             _lightingShader.SetVector3("objectColor", new Vector3(51f / 255f, 153f / 255f, 255f / 255f));
             _lightingShader.SetVector3("lightColor", new Vector3(1.0f, 1.0f, 1.0f));
+            //_lightingShader.SetVector3("lightColor", new Vector3(1.0f, 0.0f, 0.2f));
             _lightingShader.SetVector3("lightPos", _lightPos);
             _lightingShader.SetVector3("viewPos", _camera.Position);
 
@@ -329,7 +326,7 @@ namespace GameWindowApp
 
             _lightingShader.Use();
 
-            _lightingShader.SetMatrix4("model", Matrix4.Identity * Matrix4.CreateTranslation(-3.0f, -2.0f, 2.0f));
+            _lightingShader.SetMatrix4("model", Matrix4.Identity * Matrix4.CreateScale(0.33f, 0.33f, 0.33f) * Matrix4.CreateTranslation(-3.0f, -2.0f, 2.0f));
             _lightingShader.SetMatrix4("view", _camera.GetViewMatrix());
             _lightingShader.SetMatrix4("projection", _camera.GetProjectionMatrix());
 
@@ -348,7 +345,7 @@ namespace GameWindowApp
 
             _lightingShader.Use();
 
-            _lightingShader.SetMatrix4("model", Matrix4.Identity * Matrix4.CreateTranslation(3.0f, -2.0f, 2.0f));
+            _lightingShader.SetMatrix4("model", Matrix4.Identity * Matrix4.CreateScale(0.33f, 0.33f, 0.33f) * Matrix4.CreateTranslation(3.0f, -2.0f, 2.0f));
             _lightingShader.SetMatrix4("view", _camera.GetViewMatrix());
             _lightingShader.SetMatrix4("projection", _camera.GetProjectionMatrix());
 
@@ -391,44 +388,42 @@ namespace GameWindowApp
 
             const float cameraSpeed = 1.5f;
             const float sensitivity = 0.2f;
-            //const float limiter = 0.001f;
 
 
-            float deltaTime = (float)_stopwatch.ElapsedMilliseconds / 1000.0f;
             _stopwatch.Restart();
             //_timer3 = new Timer();
             //_timer3.Tick += (sender, e) =>
             //{
-                
-                if (input.IsKeyDown(Key.W))
-                {
-                    _camera.Position += _camera.Front * cameraSpeed * deltaTime; // Forward
-                }
-                if (input.IsKeyDown(Key.S))
-                {
-                    _camera.Position -= _camera.Front * cameraSpeed * deltaTime; // Backwards
-                }
-                if (input.IsKeyDown(Key.A))
-                {
-                    _camera.Position -= _camera.Right * cameraSpeed * deltaTime; // Left
-                }
-                if (input.IsKeyDown(Key.D))
-                {
-                    _camera.Position += _camera.Right * cameraSpeed * deltaTime; // Right
-                }
-                if (input.IsKeyDown(Key.Space))
-                {
-                    _camera.Position += _camera.Up * cameraSpeed * deltaTime; // Up
-                }
-                //if (input.IsKeyDown((Key)Keys.LShiftKey))
-                //{
-                    //_camera.Position -= _camera.Up * cameraSpeed * (float)_timer3.Interval; // Down
-                //}
+
+            if (input.IsKeyDown(Key.W))
+            {
+                _camera.Position += _camera.Front * cameraSpeed * deltaTime; // Forward
+            }
+            if (input.IsKeyDown(Key.S))
+            {
+                _camera.Position -= _camera.Front * cameraSpeed * deltaTime; // Backwards
+            }
+            if (input.IsKeyDown(Key.A))
+            {
+                _camera.Position -= _camera.Right * cameraSpeed * deltaTime; // Left
+            }
+            if (input.IsKeyDown(Key.D))
+            {
+                _camera.Position += _camera.Right * cameraSpeed * deltaTime; // Right
+            }
+            if (input.IsKeyDown(Key.Space))
+            {
+                _camera.Position += _camera.Up * cameraSpeed * deltaTime; // Up
+            }
+            //if (input.IsKeyDown((Key)Keys.LShiftKey))
+            //{
+            //_camera.Position -= _camera.Up * cameraSpeed * (float)_timer3.Interval; // Down
+            //}
             //};
             //_timer3.Interval = 17;   // 1000 ms per sec / 50 ms per frame = 20 FPS
             //_timer3.Start();
 
-            
+
 
             //var mouse = MouseState;
             OpenTK.Input.MouseState mouse = Mouse.GetState();
@@ -450,7 +445,12 @@ namespace GameWindowApp
 
 
 
-                glControl1.SwapBuffers();
+            glControl1.SwapBuffers();
+        }
+
+        private void параметрыToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+
         }
     }
 }

@@ -1,8 +1,8 @@
 {
   "version": 2,
-  "dgSpecHash": "BFGS/zyMBVxzLq+UyW69IEFhuOwb9mlUZCLNrLKw1yzISyDTx3jwiuByEE4SPokVe8x1+OfpwIiBlUSP4NjqZg==",
+  "dgSpecHash": "D/Ojo5SKYPRwqxmgFagCZBs80eO9iC/h5YoyubJNMwjpnGrTiinVeY7sX3fSA43XyxVEpA1Ygsujb1ecYBra9g==",
   "success": true,
-  "projectFilePath": "E:\\Documents\\Учеба\\3д программирование\\WinformOpenTK\\GameWindow\\GameWindowApp.csproj",
+  "projectFilePath": "E:\\Documents\\Учеба\\3д программирование\\PlatonBodies\\GameWindow\\GameWindowApp.csproj",
   "expectedPackageFiles": [
     "C:\\Users\\Valer\\.nuget\\packages\\opentk\\3.3.3\\opentk.3.3.3.nupkg.sha512",
     "C:\\Users\\Valer\\.nuget\\packages\\opentk.core\\4.7.7\\opentk.core.4.7.7.nupkg.sha512",
