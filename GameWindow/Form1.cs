@@ -70,13 +70,16 @@ namespace GameWindowApp
         private Timer _timer = null!;
         private float _angle = 0.0f;
 
-        private Timer _timer2 = null!;
-        private Timer _timer3 = null!;
-
         float deltaTime = 0.0f;
         float lastFrame = 0.0f;
 
         private Stopwatch _stopwatch = new Stopwatch();
+
+        // переменные параметры объектов
+
+        private Vector3 _color1 = new Vector3(1.0f, 0.5f, 0.31f);
+
+        private Vector3 _color2 = new Vector3(153.0f / 255.0f, 51f / 255f, 153f / 255f)
 
         public Form1()
         {
