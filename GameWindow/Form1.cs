@@ -73,6 +73,10 @@ namespace GameWindowApp
 
         private Stopwatch _stopwatch = new Stopwatch();
 
+        private bool isFocused = true;
+
+
+
         // переменные параметры объектов
 
         public Vector3 _color1 = new Vector3(1.0f, 0.5f, 0.31f);
@@ -526,12 +530,15 @@ namespace GameWindowApp
             }
             else
             {
-                var deltaX = mouse.X - _lastPos.X;
-                var deltaY = mouse.Y - _lastPos.Y;
-                _lastPos = new Vector2(mouse.X, mouse.Y);
+                if (isFocused)
+                {
+                    var deltaX = mouse.X - _lastPos.X;
+                    var deltaY = mouse.Y - _lastPos.Y;
+                    _lastPos = new Vector2(mouse.X, mouse.Y);
 
-                _camera.Yaw += deltaX * sensitivity;
-                _camera.Pitch -= deltaY * sensitivity;
+                    _camera.Yaw += deltaX * sensitivity;
+                    _camera.Pitch -= deltaY * sensitivity;
+                }
             }
 
 
@@ -543,6 +550,16 @@ namespace GameWindowApp
         {
             Form_Settings form2 = new Form_Settings(this);
             form2.Show();
+        }
+
+        private void Form1_Enter(object sender, EventArgs e)
+        {
+            isFocused= true;
+        }
+
+        private void Form1_Leave(object sender, EventArgs e)
+        {
+            isFocused= false;
         }
     }
 }

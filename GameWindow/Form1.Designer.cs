@@ -28,102 +28,114 @@
         /// </summary>
         private void InitializeComponent()
         {
-            panel1 = new System.Windows.Forms.Panel();
-            glControl1 = new OpenTK.GLControl();
-            menuStrip1 = new System.Windows.Forms.MenuStrip();
-            инструментыToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
-            параметрыToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
-            справкаToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
-            содержимоеToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
-            toolStripSeparator5 = new System.Windows.Forms.ToolStripSeparator();
-            опрограммеToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
-            panel1.SuspendLayout();
-            menuStrip1.SuspendLayout();
-            SuspendLayout();
+            this.panel1 = new System.Windows.Forms.Panel();
+            this.glControl1 = new OpenTK.GLControl();
+            this.menuStrip1 = new System.Windows.Forms.MenuStrip();
+            this.инструментыToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.параметрыToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.справкаToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.содержимоеToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.toolStripSeparator5 = new System.Windows.Forms.ToolStripSeparator();
+            this.опрограммеToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.panel1.SuspendLayout();
+            this.menuStrip1.SuspendLayout();
+            this.SuspendLayout();
             // 
             // panel1
             // 
-            panel1.Controls.Add(glControl1);
-            panel1.Location = new System.Drawing.Point(12, 33);
-            panel1.Name = "panel1";
-            panel1.Size = new System.Drawing.Size(800, 600);
-            panel1.TabIndex = 0;
+            this.panel1.Controls.Add(this.glControl1);
+            this.panel1.Location = new System.Drawing.Point(14, 44);
+            this.panel1.Margin = new System.Windows.Forms.Padding(3, 4, 3, 4);
+            this.panel1.Name = "panel1";
+            this.panel1.Size = new System.Drawing.Size(914, 800);
+            this.panel1.TabIndex = 0;
             // 
             // glControl1
             // 
-            glControl1.BackColor = System.Drawing.Color.Black;
-            glControl1.Location = new System.Drawing.Point(0, 0);
-            glControl1.Margin = new System.Windows.Forms.Padding(4, 3, 4, 3);
-            glControl1.Name = "glControl1";
-            glControl1.Size = new System.Drawing.Size(800, 600);
-            glControl1.TabIndex = 0;
-            glControl1.VSync = true;
-            glControl1.Load += glControl1_Load;
-            glControl1.Paint += glControl1_Paint;
+            this.glControl1.BackColor = System.Drawing.Color.Black;
+            this.glControl1.Location = new System.Drawing.Point(0, 0);
+            this.glControl1.Margin = new System.Windows.Forms.Padding(5, 4, 5, 4);
+            this.glControl1.Name = "glControl1";
+            this.glControl1.Size = new System.Drawing.Size(914, 800);
+            this.glControl1.TabIndex = 0;
+            this.glControl1.VSync = true;
+            this.glControl1.Load += new System.EventHandler(this.glControl1_Load);
+            this.glControl1.Paint += new System.Windows.Forms.PaintEventHandler(this.glControl1_Paint);
             // 
             // menuStrip1
             // 
-            menuStrip1.ImageScalingSize = new System.Drawing.Size(20, 20);
-            menuStrip1.Items.AddRange(new System.Windows.Forms.ToolStripItem[] { инструментыToolStripMenuItem, справкаToolStripMenuItem });
-            menuStrip1.Location = new System.Drawing.Point(0, 0);
-            menuStrip1.Name = "menuStrip1";
-            menuStrip1.Size = new System.Drawing.Size(825, 24);
-            menuStrip1.TabIndex = 1;
-            menuStrip1.Text = "menuStrip1";
+            this.menuStrip1.ImageScalingSize = new System.Drawing.Size(20, 20);
+            this.menuStrip1.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
+            this.инструментыToolStripMenuItem,
+            this.справкаToolStripMenuItem});
+            this.menuStrip1.Location = new System.Drawing.Point(0, 0);
+            this.menuStrip1.Name = "menuStrip1";
+            this.menuStrip1.Padding = new System.Windows.Forms.Padding(7, 3, 0, 3);
+            this.menuStrip1.Size = new System.Drawing.Size(943, 30);
+            this.menuStrip1.TabIndex = 1;
+            this.menuStrip1.Text = "menuStrip1";
             // 
             // инструментыToolStripMenuItem
             // 
-            инструментыToolStripMenuItem.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] { параметрыToolStripMenuItem });
-            инструментыToolStripMenuItem.Name = "инструментыToolStripMenuItem";
-            инструментыToolStripMenuItem.Size = new System.Drawing.Size(95, 20);
-            инструментыToolStripMenuItem.Text = "&Инструменты";
+            this.инструментыToolStripMenuItem.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
+            this.параметрыToolStripMenuItem});
+            this.инструментыToolStripMenuItem.Name = "инструментыToolStripMenuItem";
+            this.инструментыToolStripMenuItem.Size = new System.Drawing.Size(117, 24);
+            this.инструментыToolStripMenuItem.Text = "&Инструменты";
             // 
             // параметрыToolStripMenuItem
             // 
-            параметрыToolStripMenuItem.Name = "параметрыToolStripMenuItem";
-            параметрыToolStripMenuItem.Size = new System.Drawing.Size(180, 22);
-            параметрыToolStripMenuItem.Text = "&Параметры";
-            параметрыToolStripMenuItem.Click += параметрыToolStripMenuItem_Click;
+            this.параметрыToolStripMenuItem.Name = "параметрыToolStripMenuItem";
+            this.параметрыToolStripMenuItem.Size = new System.Drawing.Size(224, 26);
+            this.параметрыToolStripMenuItem.Text = "&Параметры";
+            this.параметрыToolStripMenuItem.Click += new System.EventHandler(this.параметрыToolStripMenuItem_Click);
             // 
             // справкаToolStripMenuItem
             // 
-            справкаToolStripMenuItem.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] { содержимоеToolStripMenuItem, toolStripSeparator5, опрограммеToolStripMenuItem });
-            справкаToolStripMenuItem.Name = "справкаToolStripMenuItem";
-            справкаToolStripMenuItem.Size = new System.Drawing.Size(65, 20);
-            справкаToolStripMenuItem.Text = "&Справка";
+            this.справкаToolStripMenuItem.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
+            this.содержимоеToolStripMenuItem,
+            this.toolStripSeparator5,
+            this.опрограммеToolStripMenuItem});
+            this.справкаToolStripMenuItem.Name = "справкаToolStripMenuItem";
+            this.справкаToolStripMenuItem.Size = new System.Drawing.Size(81, 24);
+            this.справкаToolStripMenuItem.Text = "&Справка";
             // 
             // содержимоеToolStripMenuItem
             // 
-            содержимоеToolStripMenuItem.Name = "содержимоеToolStripMenuItem";
-            содержимоеToolStripMenuItem.Size = new System.Drawing.Size(158, 22);
-            содержимоеToolStripMenuItem.Text = "&Содержимое";
+            this.содержимоеToolStripMenuItem.Name = "содержимоеToolStripMenuItem";
+            this.содержимоеToolStripMenuItem.Size = new System.Drawing.Size(198, 26);
+            this.содержимоеToolStripMenuItem.Text = "&Содержимое";
             // 
             // toolStripSeparator5
             // 
-            toolStripSeparator5.Name = "toolStripSeparator5";
-            toolStripSeparator5.Size = new System.Drawing.Size(155, 6);
+            this.toolStripSeparator5.Name = "toolStripSeparator5";
+            this.toolStripSeparator5.Size = new System.Drawing.Size(195, 6);
             // 
             // опрограммеToolStripMenuItem
             // 
-            опрограммеToolStripMenuItem.Name = "опрограммеToolStripMenuItem";
-            опрограммеToolStripMenuItem.Size = new System.Drawing.Size(158, 22);
-            опрограммеToolStripMenuItem.Text = "&О программе…";
+            this.опрограммеToolStripMenuItem.Name = "опрограммеToolStripMenuItem";
+            this.опрограммеToolStripMenuItem.Size = new System.Drawing.Size(198, 26);
+            this.опрограммеToolStripMenuItem.Text = "&О программе…";
             // 
             // Form1
             // 
-            AutoScaleDimensions = new System.Drawing.SizeF(7F, 15F);
-            AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            ClientSize = new System.Drawing.Size(825, 643);
-            Controls.Add(panel1);
-            Controls.Add(menuStrip1);
-            MainMenuStrip = menuStrip1;
-            Name = "Form1";
-            Text = "Form1";
-            panel1.ResumeLayout(false);
-            menuStrip1.ResumeLayout(false);
-            menuStrip1.PerformLayout();
-            ResumeLayout(false);
-            PerformLayout();
+            this.AutoScaleDimensions = new System.Drawing.SizeF(8F, 20F);
+            this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
+            this.ClientSize = new System.Drawing.Size(943, 857);
+            this.Controls.Add(this.panel1);
+            this.Controls.Add(this.menuStrip1);
+            this.MainMenuStrip = this.menuStrip1;
+            this.Margin = new System.Windows.Forms.Padding(3, 4, 3, 4);
+            this.Name = "Form1";
+            this.Text = "Form1";
+            this.Activated += new System.EventHandler(this.Form1_Enter);
+            this.Deactivate += new System.EventHandler(this.Form1_Leave);
+            this.panel1.ResumeLayout(false);
+            this.menuStrip1.ResumeLayout(false);
+            this.menuStrip1.PerformLayout();
+            this.ResumeLayout(false);
+            this.PerformLayout();
+
         }
 
         #endregion
