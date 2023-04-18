@@ -1,17 +1,17 @@
 {
   "format": 1,
   "restore": {
-    "F:\\Studies\\curs_4\\3д программирование\\PlatonBodies\\GameWindow\\GameWindowApp.csproj": {}
+    "E:\\Documents\\Учеба\\3д программирование\\PlatonBodies\\GameWindow\\GameWindowApp.csproj": {}
   },
   "projects": {
-    "F:\\Studies\\curs_4\\3д программирование\\PlatonBodies\\GameWindow\\GameWindowApp.csproj": {
+    "E:\\Documents\\Учеба\\3д программирование\\PlatonBodies\\GameWindow\\GameWindowApp.csproj": {
       "version": "1.0.0",
       "restore": {
-        "projectUniqueName": "F:\\Studies\\curs_4\\3д программирование\\PlatonBodies\\GameWindow\\GameWindowApp.csproj",
+        "projectUniqueName": "E:\\Documents\\Учеба\\3д программирование\\PlatonBodies\\GameWindow\\GameWindowApp.csproj",
         "projectName": "GameWindowApp",
-        "projectPath": "F:\\Studies\\curs_4\\3д программирование\\PlatonBodies\\GameWindow\\GameWindowApp.csproj",
+        "projectPath": "E:\\Documents\\Учеба\\3д программирование\\PlatonBodies\\GameWindow\\GameWindowApp.csproj",
         "packagesPath": "C:\\Users\\Valer\\.nuget\\packages\\",
-        "outputPath": "F:\\Studies\\curs_4\\3д программирование\\PlatonBodies\\GameWindow\\obj\\",
+        "outputPath": "E:\\Documents\\Учеба\\3д программирование\\PlatonBodies\\GameWindow\\obj\\",
         "projectStyle": "PackageReference",
         "fallbackFolders": [
           "C:\\Program Files (x86)\\Microsoft Visual Studio\\Shared\\NuGetPackages"
@@ -92,7 +92,7 @@
               "privateAssets": "none"
             }
           },
-          "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\7.0.103\\RuntimeIdentifierGraph.json"
+          "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\7.0.202\\RuntimeIdentifierGraph.json"
         }
       }
     }

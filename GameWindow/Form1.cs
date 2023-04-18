@@ -18,6 +18,7 @@ using LearnOpenTK.Common;
 using OpenTK.Input;
 using OpenTK.Windowing.GraphicsLibraryFramework;
 using System.Diagnostics;
+using System.Reflection;
 
 namespace GameWindowApp
 {
@@ -65,10 +66,7 @@ namespace GameWindowApp
 
         private Matrix4 _projection;
 
-        bool forward = true;
-
         private Timer _timer = null!;
-        private float _angle = 0.0f;
 
         float deltaTime = 0.0f;
         float lastFrame = 0.0f;
@@ -77,9 +75,86 @@ namespace GameWindowApp
 
         // переменные параметры объектов
 
-        private Vector3 _color1 = new Vector3(1.0f, 0.5f, 0.31f);
+        public Vector3 _color1 = new Vector3(1.0f, 0.5f, 0.31f);
 
-        private Vector3 _color2 = new Vector3(153.0f / 255.0f, 51f / 255f, 153f / 255f)
+        public Vector3 _color2 = new Vector3(153.0f / 255.0f, 51f / 255f, 153f / 255f);
+
+        public Vector3 _color3 = new Vector3(51f / 255f, 153f / 255f, 255f / 255f);
+
+        public Vector3 _color4 = new Vector3(0.4f, 0.6f, 0.31f);
+
+        public Vector3 _color5 = new Vector3(173f / 255f, 173f / 255f, 173f / 255f);
+
+        public Vector3 _colorReflection1 = new Vector3(1.0f, 1.0f, 1.0f);
+
+        public Vector3 _colorReflection2 = new Vector3(1.0f, 1.0f, 1.0f);
+
+        public Vector3 _colorReflection3 = new Vector3(1.0f, 1.0f, 1.0f);
+
+        public Vector3 _colorReflection4 = new Vector3(1.0f, 1.0f, 1.0f);
+
+        public Vector3 _colorReflection5 = new Vector3(1.0f, 1.0f, 1.0f);
+
+        public Matrix4 _coordinate1 = Matrix4.CreateTranslation(-2.0f, 0.0f, 0.0f);
+
+        public Matrix4 _coordinate2 = Matrix4.CreateTranslation(-1.0f, 0.0f, 0.0f);
+
+        public Matrix4 _coordinate3 = Matrix4.CreateTranslation(0.0f, 0.0f, 0.0f);
+
+        public Matrix4 _coordinate4 = Matrix4.CreateTranslation(1.0f, 0.0f, 0.0f);
+
+        public Matrix4 _coordinate5 = Matrix4.CreateTranslation(2.0f, 0.0f, 0.0f);
+
+        public float[] _angle1 = { 0, 0, 0 };
+
+        public float[] _angle2 = { 0, 0, 0 };
+
+        public float[] _angle3 = { 0, 0, 0 };
+
+        public float[] _angle4 = { 0, 0, 0 };
+
+        public float[] _angle5 = { 0, 0, 0 };
+
+        public Matrix4 _scale1 = Matrix4.CreateScale(1.0f, 1.0f, 1.0f);
+
+        public Matrix4 _scale2 = Matrix4.CreateScale(1.0f, 1.0f, 1.0f);
+
+        public Matrix4 _scale3 = Matrix4.CreateScale(1.0f, 1.0f, 1.0f);
+
+        public Matrix4 _scale4 = Matrix4.CreateScale(0.33f, 0.33f, 0.33f);
+
+        public Matrix4 _scale5 = Matrix4.CreateScale(0.33f, 0.33f, 0.33f);
+
+        public bool _moveEnabled1 = false;
+
+        public bool _moveEnabled2 = false;
+
+        public bool _moveEnabled3 = false;
+
+        public bool _moveEnabled4 = false;
+
+        public bool _moveEnabled5 = false;
+
+        public float _speed1 = 1.0f;
+
+        public float _speed2 = 1.0f;
+
+        public float _speed3 = 1.0f;
+
+        public float _speed4 = 1.0f;
+
+        public float _speed5 = 1.0f;
+
+        public bool _polygonalEnabled1 = true;
+
+        public bool _polygonalEnabled2 = true;
+
+        public bool _polygonalEnabled3 = true;
+
+        public bool _polygonalEnabled4 = true;
+
+        public bool _polygonalEnabled5 = true;
+
 
         public Form1()
         {
@@ -89,9 +164,6 @@ namespace GameWindowApp
 
         private void glControl1_Load(object sender, EventArgs e)
         {
-
-            // Make sure that when the GLControl is resized or needs to be painted,
-            // we update our projection matrix or re-render its contents, respectively.
             glControl1.Resize += glControl1_Resize;
             glControl1.Paint += glControl1_Paint;
 
@@ -220,7 +292,6 @@ namespace GameWindowApp
             _timer = new Timer();
             _timer.Tick += (sender, e) =>
             {
-                //_angle += 0.5f;
                 Render();
             };
             _timer.Interval = 15;   // 1000 ms per sec / 50 ms per frame = 20 FPS
@@ -256,10 +327,10 @@ namespace GameWindowApp
 
             float deltaTime = (float)_stopwatch.ElapsedMilliseconds / 1000.0f;
 
-            if (forward)
-                _time += 8.5 * deltaTime;
-            if (!forward)
-                _time -= 8.5 * deltaTime;
+            //if (forward)
+            //    _time += 8.5 * deltaTime;
+            //if (!forward)
+            //    _time -= 8.5 * deltaTime;
 
 
             GL.Clear(ClearBufferMask.ColorBufferBit | ClearBufferMask.DepthBufferBit);
@@ -267,102 +338,130 @@ namespace GameWindowApp
             GL.BindVertexArray(_vaoModel); // piramide
 
             _lightingShader.Use();
-            float angle = (float)(Math.PI / 2.0f);
-            var model = Matrix4.Identity * Matrix4.CreateRotationY((float)_time) * Matrix4.CreateTranslation((float)_time, 2.0f, 0);
+            //float angle = (float)(Math.PI / 2.0f);
+            //var model = Matrix4.Identity * Matrix4.CreateRotationY((float)_time) * Matrix4.CreateTranslation((float)_time, 2.0f, 0);
 
-            if (model.ExtractTranslation().X > 2.0f)
-            {
-                forward = false;
-            }
-            else if (model.ExtractTranslation().X < -2.0f)
-            {
-                forward = true;
-            }
+            //if (model.ExtractTranslation().X > 2.0f)
+            //{
+            //    forward = false;
+            //}
+            //else if (model.ExtractTranslation().X < -2.0f)
+            //{
+            //    forward = true;
+            //}
 
 
-            //_lightingShader.SetMatrix4("model", Matrix4.Identity);
-            _lightingShader.SetMatrix4("model", model);
+            //_lightingShader.SetMatrix4("model", model);
+            Matrix4 _angleMatrix1 = Matrix4.Identity * Matrix4.CreateRotationX(_angle1[0]) * Matrix4.CreateRotationY(_angle1[1]) * Matrix4.CreateRotationZ(_angle1[2]);
+            _lightingShader.SetMatrix4("model", Matrix4.Identity * _scale1 * _angleMatrix1 * _coordinate1);
             _lightingShader.SetMatrix4("view", _camera.GetViewMatrix());
             _lightingShader.SetMatrix4("projection", _camera.GetProjectionMatrix());
 
-            _lightingShader.SetVector3("objectColor", new Vector3(1.0f, 0.5f, 0.31f));
-            _lightingShader.SetVector3("lightColor", new Vector3(1.0f, 1.0f, 1.0f));
+            _lightingShader.SetVector3("objectColor", _color1);
+            _lightingShader.SetVector3("lightColor", _colorReflection1);
             _lightingShader.SetVector3("lightPos", _lightPos);
             _lightingShader.SetVector3("viewPos", _camera.Position);
 
+            if (_polygonalEnabled1)
+                GL.PolygonMode(MaterialFace.FrontAndBack, PolygonMode.Fill);
+            else
+                GL.PolygonMode(MaterialFace.FrontAndBack, PolygonMode.Line);
+
             GL.DrawArrays(PrimitiveType.Triangles, 0, 18);
+
+            GL.PolygonMode(MaterialFace.FrontAndBack, PolygonMode.Fill);
 
             GL.BindVertexArray(_vaoModel2); // octaedr
 
             _lightingShader.Use();
 
-            _lightingShader.SetMatrix4("model", Matrix4.Identity * Matrix4.CreateTranslation(0, 1.0f, 0));
+            Matrix4 _angleMatrix2 = Matrix4.Identity * Matrix4.CreateRotationX(_angle2[0]) * Matrix4.CreateRotationY(_angle2[1]) * Matrix4.CreateRotationZ(_angle2[2]);
+            _lightingShader.SetMatrix4("model", Matrix4.Identity * _scale2 * _angleMatrix2 * _coordinate2);
             _lightingShader.SetMatrix4("view", _camera.GetViewMatrix());
             _lightingShader.SetMatrix4("projection", _camera.GetProjectionMatrix());
 
-            //_lightingShader.SetVector3("objectColor", new Vector3(0.4f, 0.6f, 0.31f));
-            _lightingShader.SetVector3("objectColor", new Vector3(153.0f / 255.0f, 51f / 255f, 153f / 255f)); // Можно брать значения RGB 256
-            _lightingShader.SetVector3("lightColor", new Vector3(1.0f, 1.0f, 1.0f));
+            _lightingShader.SetVector3("objectColor", _color2); // Можно брать значения RGB 256
+            _lightingShader.SetVector3("lightColor", _colorReflection2);
             _lightingShader.SetVector3("lightPos", _lightPos);
             _lightingShader.SetVector3("viewPos", _camera.Position);
 
+            if (_polygonalEnabled2)
+                GL.PolygonMode(MaterialFace.FrontAndBack, PolygonMode.Fill);
+            else
+                GL.PolygonMode(MaterialFace.FrontAndBack, PolygonMode.Line);
+
             GL.DrawArrays(PrimitiveType.Triangles, 0, 24);
+
+            GL.PolygonMode(MaterialFace.FrontAndBack, PolygonMode.Fill);
 
             GL.BindVertexArray(_vaoModel3); // cube
 
             _lightingShader.Use();
 
-            _lightingShader.SetMatrix4("model", Matrix4.Identity);
+            Matrix4 _angleMatrix3 = Matrix4.Identity * Matrix4.CreateRotationX(_angle3[0]) * Matrix4.CreateRotationY(_angle3[1]) * Matrix4.CreateRotationZ(_angle3[2]);
+            _lightingShader.SetMatrix4("model", Matrix4.Identity * _scale3 * _angleMatrix3 * _coordinate3);
             _lightingShader.SetMatrix4("view", _camera.GetViewMatrix());
             _lightingShader.SetMatrix4("projection", _camera.GetProjectionMatrix());
 
-            //_lightingShader.SetVector3("objectColor", new Vector3(0.4f, 0.6f, 0.31f));
-            _lightingShader.SetVector3("objectColor", new Vector3(51f / 255f, 153f / 255f, 255f / 255f));
-            _lightingShader.SetVector3("lightColor", new Vector3(1.0f, 1.0f, 1.0f));
-            //_lightingShader.SetVector3("lightColor", new Vector3(1.0f, 0.0f, 0.2f));
+            _lightingShader.SetVector3("objectColor", _color3);
+            _lightingShader.SetVector3("lightColor", _colorReflection3);
             _lightingShader.SetVector3("lightPos", _lightPos);
             _lightingShader.SetVector3("viewPos", _camera.Position);
 
+            if (_polygonalEnabled3)
+                GL.PolygonMode(MaterialFace.FrontAndBack, PolygonMode.Fill);
+            else
+                GL.PolygonMode(MaterialFace.FrontAndBack, PolygonMode.Line);
+
             GL.DrawArrays(PrimitiveType.Triangles, 0, 36);
+
+            GL.PolygonMode(MaterialFace.FrontAndBack, PolygonMode.Fill);
 
             GL.BindVertexArray(_vaoModel4); // dodecahedron
 
             _lightingShader.Use();
 
-            _lightingShader.SetMatrix4("model", Matrix4.Identity * Matrix4.CreateScale(0.33f, 0.33f, 0.33f) * Matrix4.CreateTranslation(-3.0f, -2.0f, 2.0f));
+            Matrix4 _angleMatrix4 = Matrix4.Identity * Matrix4.CreateRotationX(_angle4[0]) * Matrix4.CreateRotationY(_angle4[1]) * Matrix4.CreateRotationZ(_angle4[2]);
+            _lightingShader.SetMatrix4("model", Matrix4.Identity * _scale4 * _angleMatrix4 * _coordinate4);
             _lightingShader.SetMatrix4("view", _camera.GetViewMatrix());
             _lightingShader.SetMatrix4("projection", _camera.GetProjectionMatrix());
 
-            _lightingShader.SetVector3("objectColor", new Vector3(0.4f, 0.6f, 0.31f));
-            _lightingShader.SetVector3("lightColor", new Vector3(1.0f, 1.0f, 1.0f));
+            _lightingShader.SetVector3("objectColor", _color4);
+            _lightingShader.SetVector3("lightColor", _colorReflection4);
             _lightingShader.SetVector3("lightPos", _lightPos);
             _lightingShader.SetVector3("viewPos", _camera.Position);
 
-            //GL.PolygonMode(MaterialFace.FrontAndBack, PolygonMode.Line);
+            if (_polygonalEnabled4)
+                GL.PolygonMode(MaterialFace.FrontAndBack, PolygonMode.Fill);
+            else
+                GL.PolygonMode(MaterialFace.FrontAndBack, PolygonMode.Line);
 
             GL.DrawArrays(PrimitiveType.Triangles, 0, 108);
 
-            //GL.PolygonMode(MaterialFace.FrontAndBack, PolygonMode.Fill);
+            GL.PolygonMode(MaterialFace.FrontAndBack, PolygonMode.Fill);
 
             GL.BindVertexArray(_vaoModel5); // isocahedron
 
             _lightingShader.Use();
 
-            _lightingShader.SetMatrix4("model", Matrix4.Identity * Matrix4.CreateScale(0.33f, 0.33f, 0.33f) * Matrix4.CreateTranslation(3.0f, -2.0f, 2.0f));
+            Matrix4 _angleMatrix5 = Matrix4.Identity * Matrix4.CreateRotationX(_angle5[0]) * Matrix4.CreateRotationY(_angle5[1]) * Matrix4.CreateRotationZ(_angle5[2]);
+            _lightingShader.SetMatrix4("model", Matrix4.Identity * _scale5 * _angleMatrix5 * _coordinate5);
             _lightingShader.SetMatrix4("view", _camera.GetViewMatrix());
             _lightingShader.SetMatrix4("projection", _camera.GetProjectionMatrix());
 
-            //_lightingShader.SetVector3("objectColor", new Vector3(0.4f, 0.6f, 0.31f));
-            _lightingShader.SetVector3("objectColor", new Vector3(173f / 255f, 173f / 255f, 173f / 255f));
-            _lightingShader.SetVector3("lightColor", new Vector3(1.0f, 1.0f, 1.0f));
+            _lightingShader.SetVector3("objectColor", _color5);
+            _lightingShader.SetVector3("lightColor", _colorReflection5);
             _lightingShader.SetVector3("lightPos", _lightPos);
             _lightingShader.SetVector3("viewPos", _camera.Position);
 
-            //GL.PolygonMode(MaterialFace.FrontAndBack, PolygonMode.Line);
+            if (_polygonalEnabled5)
+                GL.PolygonMode(MaterialFace.FrontAndBack, PolygonMode.Fill);
+            else
+                GL.PolygonMode(MaterialFace.FrontAndBack, PolygonMode.Line);
 
             GL.DrawArrays(PrimitiveType.Triangles, 0, 60);
 
-            //GL.PolygonMode(MaterialFace.FrontAndBack, PolygonMode.Fill);
+            GL.PolygonMode(MaterialFace.FrontAndBack, PolygonMode.Fill);
 
             GL.BindVertexArray(_vaoLamp);
 
@@ -376,8 +475,6 @@ namespace GameWindowApp
             _lampShader.SetMatrix4("projection", _camera.GetProjectionMatrix());
 
             GL.DrawArrays(PrimitiveType.Triangles, 0, 36);
-
-            //SwapBuffers();
 
             GL.End();
 
@@ -394,9 +491,6 @@ namespace GameWindowApp
 
 
             _stopwatch.Restart();
-            //_timer3 = new Timer();
-            //_timer3.Tick += (sender, e) =>
-            //{
 
             if (input.IsKeyDown(Key.W))
             {
@@ -418,17 +512,11 @@ namespace GameWindowApp
             {
                 _camera.Position += _camera.Up * cameraSpeed * deltaTime; // Up
             }
-            //if (input.IsKeyDown((Key)Keys.LShiftKey))
-            //{
-            //_camera.Position -= _camera.Up * cameraSpeed * (float)_timer3.Interval; // Down
-            //}
-            //};
-            //_timer3.Interval = 17;   // 1000 ms per sec / 50 ms per frame = 20 FPS
-            //_timer3.Start();
+            if (input.IsKeyDown(Key.ShiftLeft))
+            {
+                _camera.Position -= _camera.Up * cameraSpeed * deltaTime; // Down
+            }
 
-
-
-            //var mouse = MouseState;
             OpenTK.Input.MouseState mouse = Mouse.GetState();
 
             if (_firstMove)
@@ -453,7 +541,8 @@ namespace GameWindowApp
 
         private void параметрыToolStripMenuItem_Click(object sender, EventArgs e)
         {
-
+            Form_Settings form2 = new Form_Settings(this);
+            form2.Show();
         }
     }
 }
