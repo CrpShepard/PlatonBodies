@@ -1,4 +1,5 @@
 ﻿//using OpenTK.Mathematics;
+using OpenTK;
 using System;
 using System.IO;
 
@@ -298,7 +299,7 @@ namespace PlatonBodies
 
         //public void findNormal()
         //{
-        //    Vector3 temp = (0, 0, 0);
+        //    Vector3 temp = new Vector3(0.0f, 0.0f, 0.0f);
         //    for (int i = 0; i < dodecahedron_indices.Length; i += 3)
         //    {
         //        var a = dodecahedron_indices[i];
@@ -323,11 +324,15 @@ namespace PlatonBodies
 
         //        perp = temp;
 
-        //        //File.AppendAllText("normals.txt", perp.ToString().Replace(',', '.').Replace(' ', ',').Replace('(', ' ').Replace(';', 'f').Replace(')', 'f') + Environment.NewLine);
+        //        //File.AppendAllText("normals.txt", perp.ToString().Replace(',', '.').Replace(' ', ',').Replace('(', ' ').Replace(';', 'f').Replace(')', 'f') +
+        //        //Environment.NewLine);
 
-        //        File.AppendAllText("dodecahedron.txt", pointA.ToString().Replace(',', '.').Replace(' ', ',').Replace('(', ' ').Replace(';', 'f').Replace(')', 'f') + ", " + perp.ToString().Replace(',', '.').Replace(' ', ',').Replace('(', ' ').Replace(';', 'f').Replace(')', 'f') + "," + Environment.NewLine);
-        //        File.AppendAllText("dodecahedron.txt", pointB.ToString().Replace(',', '.').Replace(' ', ',').Replace('(', ' ').Replace(';', 'f').Replace(')', 'f') + ", " + perp.ToString().Replace(',', '.').Replace(' ', ',').Replace('(', ' ').Replace(';', 'f').Replace(')', 'f') + "," + Environment.NewLine);
-        //        File.AppendAllText("dodecahedron.txt", pointC.ToString().Replace(',', '.').Replace(' ', ',').Replace('(', ' ').Replace(';', 'f').Replace(')', 'f') + ", " + perp.ToString().Replace(',', '.').Replace(' ', ',').Replace('(', ' ').Replace(';', 'f').Replace(')', 'f') + "," + Environment.NewLine);
+        //        File.AppendAllText("dodecahedron.txt", pointA.ToString().Replace(',', '.').Replace(' ', ',').Replace('(', ' ').Replace(';', 'f').Replace(')', 'f') +
+        //            ", " + perp.ToString().Replace(',', '.').Replace(' ', ',').Replace('(', ' ').Replace(';', 'f').Replace(')', 'f') + "," + Environment.NewLine);
+        //        File.AppendAllText("dodecahedron.txt", pointB.ToString().Replace(',', '.').Replace(' ', ',').Replace('(', ' ').Replace(';', 'f').Replace(')', 'f') +
+        //            ", " + perp.ToString().Replace(',', '.').Replace(' ', ',').Replace('(', ' ').Replace(';', 'f').Replace(')', 'f') + "," + Environment.NewLine);
+        //        File.AppendAllText("dodecahedron.txt", pointC.ToString().Replace(',', '.').Replace(' ', ',').Replace('(', ' ').Replace(';', 'f').Replace(')', 'f') +
+        //            ", " + perp.ToString().Replace(',', '.').Replace(' ', ',').Replace('(', ' ').Replace(';', 'f').Replace(')', 'f') + "," + Environment.NewLine);
 
         //    }
         //}

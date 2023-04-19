@@ -96,3 +96,5 @@ F:\Studies\curs_4\3д программирование\PlatonBodies\GameWindow\o
 F:\Studies\curs_4\3д программирование\PlatonBodies\GameWindow\obj\Debug\net5.0-windows\GameWindowApp.pdb
 F:\Studies\curs_4\3д программирование\PlatonBodies\GameWindow\obj\Debug\net5.0-windows\GameWindowApp.genruntimeconfig.cache
 F:\Studies\curs_4\3д программирование\PlatonBodies\GameWindow\obj\Debug\net5.0-windows\ref\GameWindowApp.dll
+E:\Documents\Учеба\3д программирование\PlatonBodies\GameWindow\obj\Debug\net5.0-windows\GameWindowApp.Form_About.resources
+E:\Documents\Учеба\3д программирование\PlatonBodies\GameWindow\obj\Debug\net5.0-windows\GameWindowApp.Form_Info.resources

@@ -1,30 +1,21 @@
 ﻿using OpenTK;
 using OpenTK.Graphics.OpenGL;
 using System;
-using System.Collections.Generic;
-using System.ComponentModel;
-using System.Data;
 using System.Drawing;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using System.Windows.Forms;
-
-using LearnOpenTK;
-using OpenTK.Windowing.Desktop;
-//using OpenTK.Mathematics;
-using OpenTK.Windowing.Common;
 using LearnOpenTK.Common;
 using OpenTK.Input;
-using OpenTK.Windowing.GraphicsLibraryFramework;
 using System.Diagnostics;
-using System.Reflection;
 
 namespace GameWindowApp
 {
     public partial class Form1 : Form
     {
         PlatonBodies.PlatonBodies pb = new PlatonBodies.PlatonBodies();
+
+        Boundry boundry = new Boundry();
+
+        Movement movement = new Movement();
 
         private readonly Vector3 _lightPos = new Vector3(1.2f, 1.0f, 2.0f);
 
@@ -60,8 +51,6 @@ namespace GameWindowApp
 
         private Vector2 _lastPos;
 
-        private double _time;
-
         private Matrix4 _view;
 
         private Matrix4 _projection;
@@ -74,8 +63,6 @@ namespace GameWindowApp
         private Stopwatch _stopwatch = new Stopwatch();
 
         private bool isFocused = true;
-
-
 
         // переменные параметры объектов
 
@@ -129,15 +116,15 @@ namespace GameWindowApp
 
         public Matrix4 _scale5 = Matrix4.CreateScale(0.33f, 0.33f, 0.33f);
 
-        public bool _moveEnabled1 = false;
+        public bool _moveEnabled1 = true;
 
-        public bool _moveEnabled2 = false;
+        public bool _moveEnabled2 = true;
 
-        public bool _moveEnabled3 = false;
+        public bool _moveEnabled3 = true;
 
-        public bool _moveEnabled4 = false;
+        public bool _moveEnabled4 = true;
 
-        public bool _moveEnabled5 = false;
+        public bool _moveEnabled5 = true;
 
         public float _speed1 = 1.0f;
 
@@ -159,11 +146,56 @@ namespace GameWindowApp
 
         public bool _polygonalEnabled5 = true;
 
+        public Matrix4 _point1;
+
+        public Matrix4 _point2;
+
+        public Matrix4 _point3;
+
+        public Matrix4 _point4;
+
+        public Matrix4 _point5;
+
+        public float[] _velocityVector1;
+
+        public float[] _velocityVector2;
+
+        public float[] _velocityVector3;
+
+        public float[] _velocityVector4;
+
+        public float[] _velocityVector5;
+
+        public float[] _vectorSpeed1 = { 0, 0, 0 };
+
+        public float[] _vectorSpeed2 = { 0, 0, 0 };
+
+        public float[] _vectorSpeed3 = { 0, 0, 0 };
+
+        public float[] _vectorSpeed4 = { 0, 0, 0 };
+
+        public float[] _vectorSpeed5 = { 0, 0, 0 };
+
 
         public Form1()
         {
             InitializeComponent();
             _stopwatch.Start();
+
+            _point1 = movement.randomPoint();
+            _velocityVector1 = movement.vectorVelocity(_coordinate1, _point1);
+
+            _point2 = movement.randomPoint();
+            _velocityVector2 = movement.vectorVelocity(_coordinate2, _point2);
+
+            _point3 = movement.randomPoint();
+            _velocityVector3 = movement.vectorVelocity(_coordinate3, _point3);
+
+            _point4 = movement.randomPoint();
+            _velocityVector4 = movement.vectorVelocity(_coordinate4, _point4);
+
+            _point5 = movement.randomPoint();
+            _velocityVector5 = movement.vectorVelocity(_coordinate5, _point5);
         }
 
         private void glControl1_Load(object sender, EventArgs e)
@@ -331,33 +363,29 @@ namespace GameWindowApp
 
             float deltaTime = (float)_stopwatch.ElapsedMilliseconds / 1000.0f;
 
-            //if (forward)
-            //    _time += 8.5 * deltaTime;
-            //if (!forward)
-            //    _time -= 8.5 * deltaTime;
-
-
             GL.Clear(ClearBufferMask.ColorBufferBit | ClearBufferMask.DepthBufferBit);
 
             GL.BindVertexArray(_vaoModel); // piramide
 
             _lightingShader.Use();
-            //float angle = (float)(Math.PI / 2.0f);
-            //var model = Matrix4.Identity * Matrix4.CreateRotationY((float)_time) * Matrix4.CreateTranslation((float)_time, 2.0f, 0);
 
-            //if (model.ExtractTranslation().X > 2.0f)
-            //{
-            //    forward = false;
-            //}
-            //else if (model.ExtractTranslation().X < -2.0f)
-            //{
-            //    forward = true;
-            //}
+            if (_moveEnabled1)
+            {
+                _vectorSpeed1[0] += _velocityVector1[0] * _speed1 * deltaTime;
+                _vectorSpeed1[1] += _velocityVector1[1] * _speed1 * deltaTime;
+                _vectorSpeed1[2] += _velocityVector1[2] * _speed1 * deltaTime;
+            }
 
-
-            //_lightingShader.SetMatrix4("model", model);
             Matrix4 _angleMatrix1 = Matrix4.Identity * Matrix4.CreateRotationX(_angle1[0]) * Matrix4.CreateRotationY(_angle1[1]) * Matrix4.CreateRotationZ(_angle1[2]);
-            _lightingShader.SetMatrix4("model", Matrix4.Identity * _scale1 * _angleMatrix1 * _coordinate1);
+            var model1 = Matrix4.Identity * _scale1 * _angleMatrix1 * _coordinate1 * Matrix4.CreateTranslation(_vectorSpeed1[0], _vectorSpeed1[1], _vectorSpeed1[2]);
+
+            if (!boundry.checkBorder(model1))
+            {
+                _point1 = movement.randomPoint();
+                _velocityVector1 = movement.vectorVelocity(model1, _point1);
+            }
+
+            _lightingShader.SetMatrix4("model", model1);
             _lightingShader.SetMatrix4("view", _camera.GetViewMatrix());
             _lightingShader.SetMatrix4("projection", _camera.GetProjectionMatrix());
 
@@ -379,8 +407,23 @@ namespace GameWindowApp
 
             _lightingShader.Use();
 
+            if (_moveEnabled2)
+            {
+                _vectorSpeed2[0] += _velocityVector2[0] * _speed2 * deltaTime;
+                _vectorSpeed2[1] += _velocityVector2[1] * _speed2 * deltaTime;
+                _vectorSpeed2[2] += _velocityVector2[2] * _speed2 * deltaTime;
+            }
+
             Matrix4 _angleMatrix2 = Matrix4.Identity * Matrix4.CreateRotationX(_angle2[0]) * Matrix4.CreateRotationY(_angle2[1]) * Matrix4.CreateRotationZ(_angle2[2]);
-            _lightingShader.SetMatrix4("model", Matrix4.Identity * _scale2 * _angleMatrix2 * _coordinate2);
+            var model2 = Matrix4.Identity * _scale2 * _angleMatrix2 * _coordinate2 * Matrix4.CreateTranslation(_vectorSpeed2[0], _vectorSpeed2[1], _vectorSpeed2[2]);
+
+            if (!boundry.checkBorder(model2))
+            {
+                _point2 = movement.randomPoint();
+                _velocityVector2 = movement.vectorVelocity(model2, _point2);
+            }
+
+            _lightingShader.SetMatrix4("model", model2);
             _lightingShader.SetMatrix4("view", _camera.GetViewMatrix());
             _lightingShader.SetMatrix4("projection", _camera.GetProjectionMatrix());
 
@@ -402,8 +445,23 @@ namespace GameWindowApp
 
             _lightingShader.Use();
 
+            if (_moveEnabled3)
+            {
+                _vectorSpeed3[0] += _velocityVector3[0] * _speed3 * deltaTime;
+                _vectorSpeed3[1] += _velocityVector3[1] * _speed3 * deltaTime;
+                _vectorSpeed3[2] += _velocityVector3[2] * _speed3 * deltaTime;
+            }
+
             Matrix4 _angleMatrix3 = Matrix4.Identity * Matrix4.CreateRotationX(_angle3[0]) * Matrix4.CreateRotationY(_angle3[1]) * Matrix4.CreateRotationZ(_angle3[2]);
-            _lightingShader.SetMatrix4("model", Matrix4.Identity * _scale3 * _angleMatrix3 * _coordinate3);
+            var model3 = Matrix4.Identity * _scale3 * _angleMatrix3 * _coordinate3 * Matrix4.CreateTranslation(_vectorSpeed3[0], _vectorSpeed3[1], _vectorSpeed3[2]);
+
+            if (!boundry.checkBorder(model3))
+            {
+                _point3 = movement.randomPoint();
+                _velocityVector3 = movement.vectorVelocity(model3, _point3);
+            }
+
+            _lightingShader.SetMatrix4("model", model3);
             _lightingShader.SetMatrix4("view", _camera.GetViewMatrix());
             _lightingShader.SetMatrix4("projection", _camera.GetProjectionMatrix());
 
@@ -425,8 +483,23 @@ namespace GameWindowApp
 
             _lightingShader.Use();
 
+            if (_moveEnabled4)
+            {
+                _vectorSpeed4[0] += _velocityVector4[0] * _speed4 * deltaTime;
+                _vectorSpeed4[1] += _velocityVector4[1] * _speed4 * deltaTime;
+                _vectorSpeed4[2] += _velocityVector4[2] * _speed4 * deltaTime;
+            }
+
             Matrix4 _angleMatrix4 = Matrix4.Identity * Matrix4.CreateRotationX(_angle4[0]) * Matrix4.CreateRotationY(_angle4[1]) * Matrix4.CreateRotationZ(_angle4[2]);
-            _lightingShader.SetMatrix4("model", Matrix4.Identity * _scale4 * _angleMatrix4 * _coordinate4);
+            var model4 = Matrix4.Identity * _scale4 * _angleMatrix4 * _coordinate4 * Matrix4.CreateTranslation(_vectorSpeed4[0], _vectorSpeed4[1], _vectorSpeed4[2]);
+
+            if (!boundry.checkBorder(model4))
+            {
+                _point4 = movement.randomPoint();
+                _velocityVector4 = movement.vectorVelocity(model4, _point4);
+            }
+
+            _lightingShader.SetMatrix4("model", model4);
             _lightingShader.SetMatrix4("view", _camera.GetViewMatrix());
             _lightingShader.SetMatrix4("projection", _camera.GetProjectionMatrix());
 
@@ -448,8 +521,23 @@ namespace GameWindowApp
 
             _lightingShader.Use();
 
+            if (_moveEnabled5)
+            {
+                _vectorSpeed5[0] += _velocityVector5[0] * _speed5 * deltaTime;
+                _vectorSpeed5[1] += _velocityVector5[1] * _speed5 * deltaTime;
+                _vectorSpeed5[2] += _velocityVector5[2] * _speed5 * deltaTime;
+            }
+
             Matrix4 _angleMatrix5 = Matrix4.Identity * Matrix4.CreateRotationX(_angle5[0]) * Matrix4.CreateRotationY(_angle5[1]) * Matrix4.CreateRotationZ(_angle5[2]);
-            _lightingShader.SetMatrix4("model", Matrix4.Identity * _scale5 * _angleMatrix5 * _coordinate5);
+            var model5 = Matrix4.Identity * _scale5 * _angleMatrix5 * _coordinate5 * Matrix4.CreateTranslation(_vectorSpeed5[0], _vectorSpeed5[1], _vectorSpeed5[2]);
+
+            if (!boundry.checkBorder(model5))
+            {
+                _point5 = movement.randomPoint();
+                _velocityVector5 = movement.vectorVelocity(model5, _point5);
+            }
+
+            _lightingShader.SetMatrix4("model", model5);
             _lightingShader.SetMatrix4("view", _camera.GetViewMatrix());
             _lightingShader.SetMatrix4("projection", _camera.GetProjectionMatrix());
 
@@ -541,8 +629,6 @@ namespace GameWindowApp
                 }
             }
 
-
-
             glControl1.SwapBuffers();
         }
 
@@ -554,12 +640,24 @@ namespace GameWindowApp
 
         private void Form1_Enter(object sender, EventArgs e)
         {
-            isFocused= true;
+            isFocused = true;
         }
 
         private void Form1_Leave(object sender, EventArgs e)
         {
-            isFocused= false;
+            isFocused = false;
+        }
+
+        private void опрограммеToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            Form_About form3 = new Form_About();
+            form3.Show();
+        }
+
+        private void содержимоеToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            Form_Info form4 = new Form_Info();
+            form4.Show();
         }
     }
 }
